@@ -1,26 +1,55 @@
 const DORA_URL = 'https://dora-prod.vercel.app/auth/sign-in'
 
+const maxosLanding = {
+  categories: [
+    ['Tokenized Bonds', 'Fixed-income exposure represented for modern digital access.', 'CURATED INCOME'],
+    ['Private Credit', 'Selective credit opportunities with cleaner access and context.', 'STRUCTURED FLOW'],
+    ['Collectibles', 'Cultural and collectible markets made easier to evaluate and enter.', 'FRACTIONAL ACCESS'],
+    ['Alternative Assets', 'A broader gateway to off-chain value moving into digital form.', 'RWA EXPANSION'],
+  ],
+  pillars: [
+    [
+      'Curated RWA access',
+      'Maxos is designed around selective opportunities, not endless listings. The experience narrows attention toward real-world asset categories that deserve a premium access layer.',
+    ],
+    [
+      'Premium experience',
+      'A focused gateway keeps discovery, context, and entry clean. Maxos should feel closer to a private-market front desk than a noisy trading venue.',
+    ],
+    [
+      'DORA-powered execution',
+      'DORA provides the infrastructure beneath the gateway, helping Maxos connect a polished partner experience to modern digital market execution.',
+    ],
+  ],
+  steps: [
+    ['Explore curated RWA opportunities', 'Start with a focused set of tokenized bonds, credit, collectibles, and alternative asset categories.'],
+    ['Review context and access details', 'Understand the asset type, market framing, and gateway path before moving forward.'],
+    ['Enter through the Maxos gateway', 'Launch into a DORA-powered flow built for modern private-market access.'],
+  ],
+  partners: ['Brokers', 'Fintechs', 'Communities', 'Distribution partners'],
+}
+
 const partners = {
   '/partners/maxos': {
     name: 'Maxos',
     domain: 'maxos.trade',
     eyebrow: 'MAXOS.TRADE',
-    headline: 'Real-world assets, ready to trade.',
+    headline: 'Real-world assets, curated for access.',
     subtext:
       'Access tokenized bonds, collectibles, and alternative assets through a Maxos gateway powered by DORA.',
     bottomLine:
-      'TOKENIZED BONDS / COLLECTIBLES / ALTERNATIVE ASSETS / POWERED BY DORA / MAXOS.TRADE',
+      'CURATED ACCESS / TOKENIZED BONDS / COLLECTIBLES / ALTERNATIVE ASSETS / DORA-POWERED EXECUTION / MAXOS.TRADE',
     ctaLabel: 'Launch App',
-    ctaMeta: 'PRIVATE MARKET ACCESS, DORA-POWERED EXECUTION.',
+    ctaMeta: 'Private market access. DORA-powered execution.',
     ctaHref: DORA_URL,
     accent: '#d7b46a',
     variant: 'rwa',
     metrics: [
-      ['Tokenized Bonds', 'Fixed-income access'],
-      ['Collectibles', 'Fractionalized markets'],
-      ['Alternative Assets', 'Trade beyond crypto'],
+      ['Tokenized Bonds', 'Curated income access'],
+      ['Collectibles', 'Fractionalized cultural markets'],
+      ['Alternative Assets', 'Private-market gateway'],
     ],
-    labels: ['MARKET ACCESS', 'DORA ROUTED', 'LIVE GATEWAY'],
+    labels: ['CURATED ACCESS', 'DORA POWERED', 'MAXOS GATEWAY'],
   },
   '/partners/polytrade': {
     name: 'Polytrade',
@@ -40,6 +69,135 @@ const partners = {
     metrics: ['Tokenized Bonds', 'FX / EURUSD', 'RWAs', 'Collectibles', 'Private Credit', 'Digital Markets'],
     labels: ['EUR/USD 1.0842', 'US10Y 4.31%', 'RWA INDEX +1.8%', 'BTC 68,420', 'FLOW ACTIVE', 'LIVE ROUTING'],
   },
+}
+
+function renderMaxosLanding(partner) {
+  return `
+    <section class="maxos-section maxos-rwa" aria-labelledby="maxos-rwa-title">
+      <div class="section-kicker">RWA gateway</div>
+      <div class="section-split">
+        <div>
+          <p class="eyebrow">Curated real-world assets</p>
+          <h2 id="maxos-rwa-title">A selective entry point into tokenized real-world value.</h2>
+        </div>
+        <p class="section-lede">
+          Maxos gives users a premium way to access real-world asset opportunities spanning traditional
+          and off-chain markets represented in modern digital form.
+        </p>
+      </div>
+      <div class="rwa-category-grid">
+        ${maxosLanding.categories
+          .map(
+            ([title, description, tag], index) => `
+              <article class="rwa-category category-${index + 1}">
+                <span>${tag}</span>
+                <h3>${title}</h3>
+                <p>${description}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
+
+    <section class="maxos-section maxos-why" aria-labelledby="maxos-why-title">
+      <div class="why-copy">
+        <p class="eyebrow">Why Maxos</p>
+        <h2 id="maxos-why-title">Built for RWA access that feels considered, credible, and premium.</h2>
+        <p>
+          Tokenization is changing how ownership, settlement, and access are packaged across asset
+          categories. Maxos turns that shift into a cleaner gateway experience for users and partners.
+        </p>
+      </div>
+      <div class="why-pillars">
+        ${maxosLanding.pillars
+          .map(
+            ([title, description], index) => `
+              <article>
+                <small>0${index + 1}</small>
+                <h3>${title}</h3>
+                <p>${description}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
+
+    <section class="maxos-section maxos-access" aria-labelledby="maxos-access-title">
+      <div class="access-panel">
+        <p class="eyebrow">How access works</p>
+        <h2 id="maxos-access-title">A direct path from discovery to gateway entry.</h2>
+        <div class="access-steps">
+          ${maxosLanding.steps
+            .map(
+              ([title, description], index) => `
+                <article>
+                  <span>${index + 1}</span>
+                  <div>
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                  </div>
+                </article>
+              `,
+            )
+            .join('')}
+        </div>
+      </div>
+    </section>
+
+    <section class="maxos-section maxos-trust" aria-labelledby="maxos-trust-title">
+      <div class="trust-object" aria-hidden="true">
+        <span></span>
+        <strong>DORA</strong>
+      </div>
+      <div class="trust-copy">
+        <p class="eyebrow">Infrastructure layer</p>
+        <h2 id="maxos-trust-title">Structured RWA access, powered by DORA.</h2>
+        <p>
+          Maxos sits inside the long-term movement toward more transparent, efficient, and composable
+          models for ownership and access. DORA powers the execution layer beneath the premium gateway.
+        </p>
+      </div>
+      <div class="trust-lines">
+        <span>Powered by DORA</span>
+        <span>Structured RWA access</span>
+        <span>Modern digital execution</span>
+        <span>Next-generation value exchange</span>
+      </div>
+    </section>
+
+    <section class="maxos-section maxos-partners" aria-labelledby="maxos-partners-title">
+      <div>
+        <p class="eyebrow">For partners</p>
+        <h2 id="maxos-partners-title">A premium front-end layer for RWA distribution.</h2>
+      </div>
+      <div class="partner-panel">
+        <p>
+          Brokers, fintechs, communities, and distribution partners can use Maxos as a focused gateway
+          brand for curated RWA opportunities without building a noisy marketplace from scratch.
+        </p>
+        <div class="partner-tags">
+          ${maxosLanding.partners.map((label) => `<span>${label}</span>`).join('')}
+        </div>
+        <a class="secondary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">Explore Integration</a>
+      </div>
+    </section>
+
+    <section class="maxos-section maxos-close" aria-labelledby="maxos-close-title">
+      <p class="eyebrow">Maxos gateway</p>
+      <h2 id="maxos-close-title">Curated assets, ready to access.</h2>
+      <p>Enter a premium RWA gateway for tokenized bonds, collectibles, credit, and alternative assets.</p>
+      <a class="primary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">
+        ${partner.ctaLabel}
+        <span aria-hidden="true">-></span>
+      </a>
+      <footer>
+        <span>${partner.domain}</span>
+        <span>Powered by DORA</span>
+      </footer>
+    </section>
+  `
 }
 
 function getPartner() {
@@ -97,10 +255,6 @@ function renderGateway(partner) {
                     <span></span>
                     <span></span>
                     <b></b><b></b><b></b>
-                  </div>
-                  <div class="gateway-core">
-                    <span></span>
-                    <strong>DORA ROUTED</strong>
                   </div>
                   <div class="micro-labels">
                     ${partner.labels.map((label) => `<em>${label}</em>`).join('')}
@@ -160,6 +314,7 @@ function renderGateway(partner) {
               </footer>`
         }
       </section>
+      ${isMaxos ? renderMaxosLanding(partner) : ''}
     </main>
   `
 }
