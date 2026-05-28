@@ -26,7 +26,7 @@ const maxosLanding = {
     ['Review context and access details', 'Understand the asset type, market framing, and gateway path before moving forward.'],
     ['Enter through the Maxos gateway', 'Launch into a DORA-powered flow built for modern private-market access.'],
   ],
-  partners: ['Brokers', 'Fintechs', 'Communities', 'Distribution partners'],
+  partners: ['Brokers', 'Fintechs', 'Communities', 'Distribution Partners'],
 }
 
 const partners = {
@@ -49,7 +49,6 @@ const partners = {
       ['Collectibles', 'Fractionalized cultural markets'],
       ['Alternative Assets', 'Private-market gateway'],
     ],
-    labels: ['CURATED ACCESS', 'DORA POWERED', 'MAXOS GATEWAY'],
   },
   '/partners/polytrade': {
     name: 'Polytrade',
@@ -149,45 +148,46 @@ function renderMaxosLanding(partner) {
     <section class="maxos-section maxos-trust" aria-labelledby="maxos-trust-title">
       <div class="trust-object" aria-hidden="true">
         <span></span>
-        <strong>DORA</strong>
+        <strong>MAXOS</strong>
       </div>
       <div class="trust-copy">
-        <p class="eyebrow">Infrastructure layer</p>
-        <h2 id="maxos-trust-title">Structured RWA access, powered by DORA.</h2>
+        <p class="eyebrow">Trust layer</p>
+        <h2 id="maxos-trust-title">A cleaner layer for modern asset access.</h2>
         <p>
-          Maxos sits inside the long-term movement toward more transparent, efficient, and composable
-          models for ownership and access. DORA powers the execution layer beneath the premium gateway.
+          Maxos brings a more selective front end to the long-term shift toward transparent,
+          efficient, and composable ownership models, with DORA supporting the execution path beneath
+          the experience.
         </p>
       </div>
       <div class="trust-lines">
-        <span>Powered by DORA</span>
-        <span>Structured RWA access</span>
+        <span>Gateway layer</span>
+        <span>Structured access</span>
         <span>Modern digital execution</span>
-        <span>Next-generation value exchange</span>
+        <span>Built for distribution</span>
       </div>
     </section>
 
     <section class="maxos-section maxos-partners" aria-labelledby="maxos-partners-title">
       <div>
         <p class="eyebrow">For partners</p>
-        <h2 id="maxos-partners-title">A premium front-end layer for RWA distribution.</h2>
+        <h2 id="maxos-partners-title">Bring curated RWA access to your users.</h2>
       </div>
       <div class="partner-panel">
         <p>
-          Brokers, fintechs, communities, and distribution partners can use Maxos as a focused gateway
-          brand for curated RWA opportunities without building a noisy marketplace from scratch.
+          Maxos helps brokers, fintechs, communities, and distribution partners offer selected
+          real-world asset opportunities through a premium gateway experience powered by DORA.
         </p>
         <div class="partner-tags">
           ${maxosLanding.partners.map((label) => `<span>${label}</span>`).join('')}
         </div>
-        <a class="secondary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">Explore Integration</a>
+        <a class="secondary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">Discuss Partner Access</a>
       </div>
     </section>
 
     <section class="maxos-section maxos-close" aria-labelledby="maxos-close-title">
-      <p class="eyebrow">Maxos gateway</p>
-      <h2 id="maxos-close-title">Curated assets, ready to access.</h2>
-      <p>Enter a premium RWA gateway for tokenized bonds, collectibles, credit, and alternative assets.</p>
+      <p class="eyebrow">Next step</p>
+      <h2 id="maxos-close-title">Enter the Maxos gateway.</h2>
+      <p>Start with a focused path into modern private-market access.</p>
       <a class="primary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">
         ${partner.ctaLabel}
         <span aria-hidden="true">-></span>
@@ -256,9 +256,7 @@ function renderGateway(partner) {
                     <span></span>
                     <b></b><b></b><b></b>
                   </div>
-                  <div class="micro-labels">
-                    ${partner.labels.map((label) => `<em>${label}</em>`).join('')}
-                  </div>`
+                  `
                 : ''
             }
             ${
