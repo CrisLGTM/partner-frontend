@@ -1,362 +1,366 @@
 const DORA_URL = 'https://dora-prod.vercel.app/auth/sign-in'
 
-const maxosLanding = {
-  categories: [
-    ['Tokenized Bonds', 'Fixed-income exposure represented for modern digital access.', 'CURATED INCOME'],
-    ['Private Credit', 'Selective credit opportunities with cleaner access and context.', 'STRUCTURED FLOW'],
-    ['Collectibles', 'Cultural and collectible markets made easier to evaluate and enter.', 'FRACTIONAL ACCESS'],
-    ['Alternative Assets', 'A broader gateway to off-chain value moving into digital form.', 'RWA EXPANSION'],
-  ],
-  pillars: [
-    [
-      'Curated RWA access',
-      'Maxos is designed around selective opportunities, not endless listings. The experience narrows attention toward real-world asset categories that deserve a premium access layer.',
-    ],
-    [
-      'Premium experience',
-      'A focused gateway keeps discovery, context, and entry clean. Maxos should feel closer to a private-market front desk than a noisy trading venue.',
-    ],
-    [
-      'DORA-powered execution',
-      'DORA provides the infrastructure beneath the gateway, helping Maxos connect a polished partner experience to modern digital market execution.',
-    ],
-  ],
-  steps: [
-    ['Explore curated RWA opportunities', 'Start with a focused set of tokenized bonds, credit, collectibles, and alternative asset categories.'],
-    ['Review context and access details', 'Understand the asset type, market framing, and gateway path before moving forward.'],
-    ['Enter through the Maxos gateway', 'Launch into a DORA-powered flow built for modern private-market access.'],
-  ],
-  partners: ['Brokers', 'Fintechs', 'Communities', 'Distribution Partners'],
-}
-
 const partners = {
   '/partners/maxos': {
     name: 'Maxos',
     domain: 'maxos.trade',
-    eyebrow: 'MAXOS.TRADE',
-    headline: 'Real-world assets, curated for access.',
-    subtext:
-      'Access tokenized bonds, collectibles, and alternative assets through a Maxos gateway powered by DORA.',
-    bottomLine:
-      'CURATED ACCESS / TOKENIZED BONDS / COLLECTIBLES / ALTERNATIVE ASSETS / DORA-POWERED EXECUTION / MAXOS.TRADE',
-    ctaLabel: 'Launch App',
-    ctaMeta: 'Private market access. DORA-powered execution.',
-    ctaHref: DORA_URL,
     accent: '#d7b46a',
-    variant: 'rwa',
-    metrics: [
-      ['Tokenized Bonds', 'Curated income access'],
-      ['Collectibles', 'Fractionalized cultural markets'],
-      ['Alternative Assets', 'Private-market gateway'],
+    tone: 'rwa',
+    eyebrow: 'Curated RWA gateway',
+    headline: 'Real-world assets, routed through DORA.',
+    subtext:
+      'A premium partner entry point for tokenized bonds, private credit, collectibles, and alternative market access.',
+    stats: [
+      ['Gateway', 'RWA access'],
+      ['Focus', 'Curated markets'],
+      ['Flow', 'DORA execution'],
     ],
+    featureTitle: 'Built for selective access, not noisy discovery.',
+    features: [
+      'Focused partner landing experience for Maxos users.',
+      'Clear positioning for tokenized real-world asset categories.',
+      'Direct launch path into the DORA authentication flow.',
+    ],
+    markets: ['Tokenized bonds', 'Private credit', 'Collectibles', 'Alternative assets'],
   },
   '/partners/polytrade': {
     name: 'Polytrade',
     domain: 'polytrade.capital',
-    eyebrow: 'POLYTRADE.CAPITAL',
+    accent: '#69e6cf',
+    tone: 'markets',
+    eyebrow: 'Digital market gateway',
     headline: 'Markets move. Capital follows.',
     subtext:
-      'Access digital markets, tokenized assets, and new trading opportunities through a Polytrade gateway powered by DORA.',
-    bottomLine:
-      'EUR/USD +0.24% / US10Y 4.31% / TOKENIZED BONDS / PRIVATE CREDIT / COLLECTIBLES / RWA MARKETS / POWERED BY DORA',
-    ctaLabel: 'Launch App',
-    heroCtaLabel: 'Launch App',
-    ctaMeta: 'MULTI-MARKET ACCESS. ROUTED THROUGH DORA.',
-    ctaHref: DORA_URL,
-    accent: '#7cf1d3',
-    variant: 'abstract',
-    metrics: ['Tokenized Bonds', 'FX / EURUSD', 'RWAs', 'Collectibles', 'Private Credit', 'Digital Markets'],
-    labels: ['EUR/USD 1.0842', 'US10Y 4.31%', 'RWA INDEX +1.8%', 'BTC 68,420', 'FLOW ACTIVE', 'LIVE ROUTING'],
+      'A fast partner gateway for users entering tokenized markets and digital asset flows through DORA.',
+    stats: [
+      ['Access', 'Multi-market'],
+      ['Routing', 'Live gateway'],
+      ['Powered by', 'DORA'],
+    ],
+    featureTitle: 'A sharp front door for active market users.',
+    features: [
+      'Clean public page for Polytrade partner traffic.',
+      'Market-led visual language with active routing cues.',
+      'One primary CTA that sends users into the app.',
+    ],
+    markets: ['FX', 'Tokenized bonds', 'RWAs', 'Digital markets'],
+  },
+  '/partners/duration': {
+    name: 'Duration',
+    domain: 'Duration',
+    accent: '#9fb7ff',
+    tone: 'duration',
+    eyebrow: 'Time-aware gateway',
+    headline: 'Timing matters. Access should follow.',
+    subtext:
+      'A dedicated partner gateway for Duration users entering DORA with a clean path from signal to action.',
+    stats: [
+      ['Partner', 'Duration'],
+      ['Scope', 'Tokenized fixed income'],
+      ['Flow', 'DORA access'],
+    ],
+    featureTitle: 'A direct gateway for partner traffic that needs clarity and speed.',
+    features: [
+      'Dedicated public route for Duration partner users.',
+      'Focused landing copy with a single launch path into DORA.',
+      'Static GitHub-ready implementation with fallback routing support.',
+    ],
+    markets: ['Timing', 'Signals', 'Workflow', 'DORA gateway'],
   },
 }
 
-function renderMaxosLanding(partner) {
+function normalizePath() {
+  return window.location.pathname.replace(/\/$/, '')
+}
+
+function renderShell(content, tone = 'index') {
   return `
-    <section class="maxos-section maxos-rwa" aria-labelledby="maxos-rwa-title">
-      <div class="section-kicker">RWA gateway</div>
-      <div class="section-split">
-        <div>
-          <p class="eyebrow">Curated real-world assets</p>
-          <h2 id="maxos-rwa-title">A selective entry point into tokenized real-world value.</h2>
+    <main class="site site-${tone}">
+      <div class="grid-backdrop" aria-hidden="true"></div>
+      ${content}
+    </main>
+  `
+}
+
+function renderNav(partner) {
+  return `
+    <nav class="nav" aria-label="Partner navigation">
+      <a class="brand" href="/" aria-label="DORA partner gateways home">
+        <span class="brand-mark">${partner ? partner.name.charAt(0) : 'D'}</span>
+        <span>
+          <strong>${partner ? partner.name : 'DORA'}</strong>
+          <small>${partner ? partner.domain : 'Partner gateways'}</small>
+        </span>
+      </a>
+      <a class="nav-action" href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+    </nav>
+  `
+}
+
+function renderGateway(partner) {
+  document.title = `${partner.name} | DORA Partner Gateway`
+  document.documentElement.style.setProperty('--accent', partner.accent)
+
+  if (partner.tone === 'duration') {
+    return renderDurationInstitutional(partner)
+  }
+
+  return renderShell(
+    `
+      ${renderNav(partner)}
+      <section class="hero" aria-labelledby="gateway-title">
+        <div class="hero-copy">
+          <p class="eyebrow">${partner.eyebrow}</p>
+          <h1 id="gateway-title">${partner.headline}</h1>
+          <p class="lede">${partner.subtext}</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="${DORA_URL}" rel="noopener noreferrer">
+              Launch App
+              <span aria-hidden="true">-></span>
+            </a>
+            <span>Powered by DORA</span>
+          </div>
         </div>
-        <p class="section-lede">
-          Maxos gives users a premium way to access real-world asset opportunities spanning traditional
-          and off-chain markets represented in modern digital form.
-        </p>
-      </div>
-      <div class="rwa-category-grid">
-        ${maxosLanding.categories
-          .map(
-            ([title, description, tag], index) => `
-              <article class="rwa-category category-${index + 1}">
-                <span>${tag}</span>
-                <h3>${title}</h3>
-                <p>${description}</p>
-              </article>
-            `,
-          )
-          .join('')}
-      </div>
-    </section>
 
-    <section class="maxos-section maxos-why" aria-labelledby="maxos-why-title">
-      <div class="why-copy">
-        <p class="eyebrow">Why Maxos</p>
-        <h2 id="maxos-why-title">Built for RWA access that feels considered, credible, and premium.</h2>
-        <p>
-          Tokenization is changing how ownership, settlement, and access are packaged across asset
-          categories. Maxos turns that shift into a cleaner gateway experience for users and partners.
-        </p>
-      </div>
-      <div class="why-pillars">
-        ${maxosLanding.pillars
-          .map(
-            ([title, description], index) => `
-              <article>
-                <small>0${index + 1}</small>
-                <h3>${title}</h3>
-                <p>${description}</p>
-              </article>
-            `,
-          )
-          .join('')}
-      </div>
-    </section>
-
-    <section class="maxos-section maxos-access" aria-labelledby="maxos-access-title">
-      <div class="access-panel">
-        <p class="eyebrow">How access works</p>
-        <h2 id="maxos-access-title">A direct path from discovery to gateway entry.</h2>
-        <div class="access-steps">
-          ${maxosLanding.steps
+        <div class="gateway-visual" aria-hidden="true">
+          <div class="signal-card signal-main">
+            <span>${partner.domain}</span>
+            <strong>${partner.name}</strong>
+            <small>DORA gateway active</small>
+          </div>
+          ${partner.stats
             .map(
-              ([title, description], index) => `
+              ([label, value], index) => `
+                <div class="signal-card signal-${index + 1}">
+                  <span>${label}</span>
+                  <strong>${value}</strong>
+                </div>
+              `,
+            )
+            .join('')}
+          <div class="signal-ring"></div>
+        </div>
+      </section>
+
+      <section class="content-band" aria-labelledby="features-title">
+        <div>
+          <p class="eyebrow">Partner experience</p>
+          <h2 id="features-title">${partner.featureTitle}</h2>
+        </div>
+        <div class="feature-list">
+          ${partner.features
+            .map(
+              (feature, index) => `
                 <article>
-                  <span>${index + 1}</span>
-                  <div>
-                    <h3>${title}</h3>
-                    <p>${description}</p>
-                  </div>
+                  <span>0${index + 1}</span>
+                  <p>${feature}</p>
                 </article>
               `,
             )
             .join('')}
         </div>
-      </div>
-    </section>
-
-    <section class="maxos-section maxos-trust" aria-labelledby="maxos-trust-title">
-      <div class="trust-object" aria-hidden="true">
-        <span></span>
-        <strong>MAXOS</strong>
-      </div>
-      <div class="trust-copy">
-        <p class="eyebrow">Trust layer</p>
-        <h2 id="maxos-trust-title">A cleaner layer for modern asset access.</h2>
-        <p>
-          Maxos brings a more selective front end to the long-term shift toward transparent,
-          efficient, and composable ownership models, with DORA supporting the execution path beneath
-          the experience.
-        </p>
-      </div>
-      <div class="trust-lines">
-        <span>Gateway layer</span>
-        <span>Structured access</span>
-        <span>Modern digital execution</span>
-        <span>Built for distribution</span>
-      </div>
-    </section>
-
-    <section class="maxos-section maxos-partners" aria-labelledby="maxos-partners-title">
-      <div>
-        <p class="eyebrow">For partners</p>
-        <h2 id="maxos-partners-title">Bring curated RWA access to your users.</h2>
-      </div>
-      <div class="partner-panel">
-        <p>
-          Maxos helps brokers, fintechs, communities, and distribution partners offer selected
-          real-world asset opportunities through a premium gateway experience powered by DORA.
-        </p>
-        <div class="partner-tags">
-          ${maxosLanding.partners.map((label) => `<span>${label}</span>`).join('')}
-        </div>
-        <a class="secondary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">Discuss Partner Access</a>
-      </div>
-    </section>
-
-    <section class="maxos-section maxos-close" aria-labelledby="maxos-close-title">
-      <p class="eyebrow">Next step</p>
-      <h2 id="maxos-close-title">Enter the Maxos gateway.</h2>
-      <p>Start with a focused path into modern private-market access.</p>
-      <a class="primary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">
-        ${partner.ctaLabel}
-        <span aria-hidden="true">-></span>
-      </a>
-      <footer>
-        <span>${partner.domain}</span>
-        <span>Powered by DORA</span>
-      </footer>
-    </section>
-  `
-}
-
-function getPartner() {
-  const path = window.location.pathname.replace(/\/$/, '')
-  return partners[path] ?? null
-}
-
-function renderGateway(partner) {
-  document.title = `${partner.domain} | ${partner.ctaLabel}`
-  document.documentElement.style.setProperty('--accent', partner.accent)
-  const isMaxos = partner.variant === 'rwa'
-  const isPolytrade = partner.variant === 'abstract'
-
-  return `
-    <main class="gateway gateway-${partner.variant}">
-      ${isMaxos || isPolytrade ? '<div class="grain"></div><div class="particle-field"></div>' : ''}
-      <div class="ambient ambient-one"></div>
-      <div class="ambient ambient-two"></div>
-      <section class="hero ${isPolytrade ? 'poly-hero' : ''}" aria-labelledby="gateway-title">
-        <nav class="topbar ${isPolytrade ? 'poly-topbar' : ''}" aria-label="Partner">
-          <a class="brand" href="/" aria-label="DORA partner gateways">
-            <span class="brand-mark">${partner.name.charAt(0)}</span>
-            <span>
-              <strong>${partner.name}</strong>
-              <small>${partner.domain}</small>
-            </span>
-          </a>
-          <a class="nav-cta" href="${partner.ctaHref}" rel="noopener noreferrer">${partner.ctaLabel}</a>
-        </nav>
-
-        <div class="hero-grid">
-          <div class="copy">
-            <p class="eyebrow">${partner.eyebrow ?? partner.domain}</p>
-            ${
-              isPolytrade
-                ? `<h1 id="gateway-title" class="animated-headline">
-                    <span>Markets move.</span>
-                    <span>Capital follows.</span>
-                  </h1>`
-                : `<h1 id="gateway-title">${partner.headline}</h1>`
-            }
-            <p class="subtext">${partner.subtext}</p>
-            <a class="primary-cta" href="${partner.ctaHref}" rel="noopener noreferrer">
-              ${partner.heroCtaLabel ?? partner.ctaLabel}
-              <span aria-hidden="true">-></span>
-            </a>
-            ${partner.ctaMeta ? `<p class="cta-meta">${partner.ctaMeta}</p>` : ''}
-          </div>
-
-          <div class="visual" aria-hidden="true">
-            ${
-              isMaxos
-                ? `<div class="orbital">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <b></b><b></b><b></b>
-                  </div>
-                  `
-                : ''
-            }
-            ${
-              isPolytrade
-                ? `<div class="poly-flow" aria-hidden="true">
-                    <span class="flow-line flow-1"></span>
-                    <span class="flow-line flow-2"></span>
-                    <span class="flow-line flow-3"></span>
-                    <span class="flow-line flow-4"></span>
-                    <span class="flow-node node-a"></span>
-                    <span class="flow-node node-b"></span>
-                    <span class="flow-node node-c"></span>
-                    <span class="flow-node node-d"></span>
-                    <span class="flow-node node-e"></span>
-                    <span class="flow-core"></span>
-                  </div>`
-                : `<div class="asset-stack">
-                    ${partner.metrics
-                      .map(
-                        (metric, index) => `
-                          <div class="asset-row row-${index + 1}">
-                            ${
-                              Array.isArray(metric)
-                                ? `<span><strong>${metric[0]}</strong><small>${metric[1]}</small></span>`
-                                : `<span>${metric}</span>`
-                            }
-                            <i></i>
-                          </div>
-                        `,
-                      )
-                      .join('')}
-                  </div>`
-            }
-          </div>
-        </div>
-
-        ${
-          isMaxos
-            ? `<footer class="market-rail">
-                <div>
-                  <span>${partner.bottomLine}</span>
-                  <span>${partner.bottomLine}</span>
-                </div>
-              </footer>`
-            : isPolytrade
-              ? `<footer class="poly-footer">
-                  <span>POLYTRADE.CAPITAL</span>
-                  <span>POWERED BY DORA</span>
-                </footer>`
-            : `<footer class="footer-line">
-                <span>${partner.bottomLine}</span>
-                <span>DORA partner gateway</span>
-              </footer>`
-        }
       </section>
-      ${isMaxos ? renderMaxosLanding(partner) : ''}
-    </main>
-  `
+
+      <section class="market-strip" aria-label="Supported market categories">
+        ${partner.markets.map((market) => `<span>${market}</span>`).join('')}
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <p class="eyebrow">Next step</p>
+        <h2 id="closing-title">Enter the ${partner.name} gateway.</h2>
+        <a class="primary-action" href="${DORA_URL}" rel="noopener noreferrer">
+          Launch App
+          <span aria-hidden="true">-></span>
+        </a>
+      </section>
+    `,
+    partner.tone,
+  )
+}
+
+function renderDurationInstitutional(partner) {
+  document.title = 'Duration | Tokenized Fixed Income Infrastructure'
+  document.documentElement.style.setProperty('--accent', '#86a7b6')
+
+  const proofPoints = [
+    ['MARKET ACCESS', 'Tokenized bonds & RWAs'],
+    ['EXECUTION', 'AMM + order book model'],
+    ['LIQUIDITY', 'Pool-based market structure'],
+    ['PARTNERS', 'Gateway infrastructure'],
+  ]
+
+  return renderShell(
+    `
+      <header class="duration-header">
+        <a class="duration-wordmark" href="/partners/duration" aria-label="Duration home">
+          <strong>Duration</strong>
+        </a>
+        <nav class="duration-nav" aria-label="Duration navigation">
+          <a href="#platform">Platform</a>
+          <a href="#platform">Markets</a>
+          <a href="#platform">Research</a>
+          <a href="#company">Company</a>
+        </nav>
+        <a class="duration-nav-cta" href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+      </header>
+
+      <section class="duration-hero" aria-labelledby="duration-title">
+        <div class="duration-hero-copy">
+          <p class="duration-eyebrow">INSTITUTIONAL TOKENIZED MARKET INFRASTRUCTURE</p>
+          <h1 id="duration-title">Market infrastructure for tokenized fixed income.</h1>
+          <p>
+            Duration provides institutional access, execution, and liquidity infrastructure for tokenized bonds,
+            real-world assets, and duration-based markets.
+          </p>
+          <div class="duration-actions">
+            <a class="duration-primary" href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+          </div>
+        </div>
+
+        <div class="duration-market-visual" aria-label="Abstract fixed-income market infrastructure visualization">
+            <div class="yield-panel">
+              <div class="yield-panel-header">
+              <span>MARKET VIEW</span>
+              <strong>Tokenized fixed income</strong>
+            </div>
+            <div class="yield-chart" aria-hidden="true">
+              <span class="chart-label yield-label">Yield curve</span>
+              <span class="chart-label liquidity-label">Liquidity</span>
+              <svg viewBox="0 0 520 260" role="presentation" focusable="false">
+                <path class="chart-grid-line" d="M32 54H488"></path>
+                <path class="chart-grid-line" d="M32 118H488"></path>
+                <path class="chart-grid-line" d="M32 182H488"></path>
+                <path class="duration-curve duration-curve-base" d="M36 195 C130 164 173 92 247 112 C322 132 361 76 486 56"></path>
+                <path class="duration-curve duration-curve-alt" d="M36 210 C126 190 191 139 264 147 C343 154 396 105 486 88"></path>
+                <circle class="curve-point p-1" cx="126" cy="164" r="4"></circle>
+                <circle class="curve-point p-2" cx="247" cy="112" r="4"></circle>
+                <circle class="curve-point p-3" cx="361" cy="76" r="4"></circle>
+                <circle class="curve-point p-4" cx="486" cy="56" r="4"></circle>
+              </svg>
+              <div class="liquidity-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="maturity-ladder" aria-hidden="true">
+              <div><span>3M</span></div>
+              <div><span>2Y</span></div>
+              <div><span>5Y</span></div>
+              <div><span>10Y</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="duration-proof" aria-label="Platform proof points">
+        ${proofPoints
+          .map(
+            ([label, body]) => `
+              <article>
+                <span>${label}</span>
+                <p>${body}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </section>
+
+      <section class="duration-brief" id="platform" aria-labelledby="duration-brief-title">
+        <div>
+          <span>Platform scope</span>
+          <h2 id="duration-brief-title">Access, execution, and liquidity infrastructure for professional tokenized markets.</h2>
+        </div>
+        <p>
+          Duration is positioned for institutional participants evaluating tokenized bonds,
+          real-world assets, AMM and order book execution, and partner gateway infrastructure.
+        </p>
+      </section>
+
+      <section class="duration-final" id="request-access" aria-labelledby="duration-final-title">
+        <div class="closing-linework" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </div>
+        <div>
+          <p class="duration-eyebrow">Access</p>
+          <h2 id="duration-final-title">Access tokenized fixed-income markets through Duration.</h2>
+          <p>A professional gateway for tokenized assets, liquidity, and market infrastructure.</p>
+        </div>
+        <div class="duration-actions">
+          <a class="duration-primary" href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+        </div>
+      </section>
+
+      <footer class="duration-footer" id="company">
+        <div class="footer-brand">
+          <a class="duration-wordmark" href="/partners/duration" aria-label="Duration home">
+            <strong>Duration</strong>
+          </a>
+          <p>Duration provides institutional infrastructure for tokenized fixed-income and real-world asset markets.</p>
+        </div>
+        <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Risk Disclosures</a></div>
+        <p class="footer-copy">Copyright Duration. All rights reserved.</p>
+      </footer>
+    `,
+    'duration duration-landing',
+  )
 }
 
 function renderIndex() {
   document.title = 'DORA Partner Gateways'
-  document.documentElement.style.setProperty('--accent', '#7cf1d3')
+  document.documentElement.style.setProperty('--accent', '#69e6cf')
 
-  return `
-    <main class="gateway gateway-index">
+  return renderShell(
+    `
+      ${renderNav()}
       <section class="directory" aria-labelledby="directory-title">
         <p class="eyebrow">DORA partner gateways</p>
-        <h1 id="directory-title">Choose a public partner gateway.</h1>
+        <h1 id="directory-title">Public launch pages for partner traffic.</h1>
+        <p class="lede">
+          Choose a gateway to preview the GitHub-ready static website and route users into DORA.
+        </p>
         <div class="directory-grid">
-          <a class="directory-card" href="/partners/maxos">
-            <strong>Maxos</strong>
-            <span>maxos.trade</span>
-          </a>
-          <a class="directory-card" href="/partners/polytrade">
-            <strong>Polytrade</strong>
-            <span>polytrade.capital</span>
-          </a>
+          ${Object.entries(partners)
+            .map(
+              ([path, partner]) => `
+                <a class="directory-card" href="${path}">
+                  <span>${partner.domain}</span>
+                  <strong>${partner.name}</strong>
+                  <small>${partner.eyebrow}</small>
+                </a>
+              `,
+            )
+            .join('')}
         </div>
       </section>
-    </main>
-  `
+    `,
+    'index',
+  )
 }
 
 function renderNotFound() {
   document.title = 'Gateway not found'
+  document.documentElement.style.setProperty('--accent', '#69e6cf')
 
-  return `
-    <main class="gateway gateway-index">
+  return renderShell(
+    `
+      ${renderNav()}
       <section class="directory" aria-labelledby="not-found-title">
         <p class="eyebrow">404</p>
         <h1 id="not-found-title">Partner gateway not found.</h1>
-        <a class="primary-cta" href="/">View gateways</a>
+        <p class="lede">Use the gateway directory to choose an available partner route.</p>
+        <a class="primary-action" href="/">View Gateways</a>
       </section>
-    </main>
-  `
+    `,
+    'index',
+  )
 }
 
 const app = document.querySelector('#app')
-const partner = getPartner()
-const path = window.location.pathname.replace(/\/$/, '')
+const path = normalizePath()
+const partner = partners[path]
 
 app.innerHTML = partner ? renderGateway(partner) : path === '' ? renderIndex() : renderNotFound()
