@@ -90,43 +90,6 @@ const partners = {
   },
 }
 
-const africaTrades = {
-  markets: [
-    ['FX', 'Currency context across selected African markets.', 'Market watch'],
-    ['Commodities', 'Coverage of key export flows, pricing context, and corridors.', 'Research coverage'],
-    ['Sovereign Debt', 'Macro, issuance, and sovereign risk notes for institutional readers.', 'Research coverage'],
-    ['Trade Finance', 'Signals around working capital, invoices, and cross-border settlement.', 'Coming soon'],
-    ['Infrastructure', 'Long-horizon project finance and regional development context.', 'Market watch'],
-    ['Private Credit', 'Relationship-led visibility into private market opportunities.', 'Coming soon'],
-  ],
-  values: [
-    [
-      'Market Research',
-      'Curated briefs on African macro, sector trends, sovereign risk, and capital flows.',
-    ],
-    [
-      'Trade Flow Intelligence',
-      'Context around commodities, corridors, cross-border flows, and regional market fragmentation.',
-    ],
-    [
-      'Capital Access',
-      'Relationship-led access to private opportunities, partners, and market participants.',
-    ],
-  ],
-  audiences: [
-    ['Investors', 'Evaluate African market exposure with better context and fewer blind spots.'],
-    ['Operators', 'Track trade corridors, counterparties, and regional market dynamics.'],
-    ['Analysts', 'Use curated research inputs for macro, sector, and risk work.'],
-    ['Institutions', 'Understand fragmented markets before pursuing relationship-led access.'],
-  ],
-  methods: [
-    'Verified sources',
-    'Regional context',
-    'Long-term market view',
-    'No broad public offering language',
-  ],
-}
-
 function renderMaxosLanding(partner) {
   return `
     <section class="maxos-section maxos-rwa" aria-labelledby="maxos-rwa-title">
@@ -263,138 +226,60 @@ function getPartner() {
 }
 
 function renderAfricaTradesLanding(partner) {
-  document.title = 'Africa.Trades | African Markets Intelligence'
+  document.title = 'africa.trades | African Market Notes'
   document.documentElement.style.setProperty('--accent', partner.accent)
+
+  const signals = ['FX', 'Commodities', 'Sovereign Debt', 'Private Credit']
 
   return `
     <main class="africa-page">
       <header class="africa-header">
         <a class="africa-wordmark" href="/partners/africa-trades" aria-label="Africa.Trades home">
-          Africa.Trades
+          africa.trades
         </a>
         <nav class="africa-nav" aria-label="Africa.Trades navigation">
-          <a href="#markets">Markets</a>
-          <a href="#research">Research</a>
-          <a href="#access">Access</a>
           <a href="#about">About</a>
+          <a href="#notes">Notes</a>
+          <a href="${partner.ctaHref}">Contact</a>
         </nav>
         <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
       </header>
 
       <section class="africa-hero" aria-labelledby="africa-title">
         <div class="africa-hero-copy">
-          <p class="africa-eyebrow">African Markets Intelligence</p>
-          <h1 id="africa-title">Research, data, and access for African markets.</h1>
+          <p class="africa-eyebrow">African Market Notes</p>
+          <h1 id="africa-title">African markets, clearly mapped.</h1>
           <p>
-            Africa.Trades helps investors, operators, and institutions understand fragmented
-            African markets through curated research, verified data, and relationship-led access.
+            Research, market notes, and access signals across African trade, capital flows,
+            commodities, FX, and private markets.
           </p>
           <div class="africa-actions">
             <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
-            <a class="africa-button africa-button-secondary" href="#market-brief">View Market Brief</a>
+            <a class="africa-button africa-button-secondary" href="#notes">Read Notes</a>
           </div>
         </div>
-        <aside class="africa-hero-panel" aria-label="Platform focus">
-          <span>Coverage focus</span>
-          <strong>Trade flows, capital markets, and regional context.</strong>
-          <dl>
-            <div><dt>Scope</dt><dd>African markets</dd></div>
-            <div><dt>Model</dt><dd>Research-led</dd></div>
-            <div><dt>Access</dt><dd>Relationship-based</dd></div>
-          </dl>
-        </aside>
       </section>
 
-      <section class="africa-market-strip" id="markets" aria-label="Market snapshot">
-        ${africaTrades.markets
-          .map(
-            ([title, description, status]) => `
-              <article>
-                <span>${status}</span>
-                <h2>${title}</h2>
-                <p>${description}</p>
-              </article>
-            `,
-          )
-          .join('')}
+      <section class="africa-signal-row" aria-label="Market coverage signals">
+        ${signals.map((signal) => `<span>${signal}</span>`).join('')}
       </section>
 
-      <section class="africa-section" id="research" aria-labelledby="value-title">
-        <div class="africa-section-heading">
-          <p class="africa-eyebrow">Platform</p>
-          <h2 id="value-title">Built for serious market participants.</h2>
-        </div>
-        <div class="africa-value-grid">
-          ${africaTrades.values
-            .map(
-              ([title, description]) => `
-                <article>
-                  <h3>${title}</h3>
-                  <p>${description}</p>
-                </article>
-              `,
-            )
-            .join('')}
-        </div>
+      <section class="africa-explainer" id="about" aria-labelledby="africa-explainer-title">
+        <span>What this is</span>
+        <p id="africa-explainer-title">
+          Africa.Trades is a lightweight research and market access desk for people tracking
+          African markets. It is built for clear context, not noise.
+        </p>
       </section>
 
-      <section class="africa-brief" id="market-brief" aria-labelledby="brief-title">
+      <footer class="africa-footer" id="notes">
         <div>
-          <p class="africa-eyebrow">Latest Market Brief</p>
-          <h2 id="brief-title">African capital flows are becoming more strategic, but still under-covered.</h2>
-        </div>
-        <article>
-          <span>Market Brief / May 2026</span>
-          <p>
-            Regional capital formation is increasingly shaped by commodities, infrastructure needs,
-            sovereign risk, and private credit demand. Yet reliable market context remains uneven,
-            creating a gap for research-led participants.
-          </p>
-          <a class="africa-text-link" href="${partner.ctaHref}">Read Brief</a>
-        </article>
-      </section>
-
-      <section class="africa-section africa-audience" id="access" aria-labelledby="audience-title">
-        <div class="africa-section-heading">
-          <p class="africa-eyebrow">Who it is for</p>
-          <h2 id="audience-title">Designed for teams that need context before access.</h2>
-        </div>
-        <div class="africa-audience-grid">
-          ${africaTrades.audiences
-            .map(
-              ([title, description]) => `
-                <article>
-                  <h3>${title}</h3>
-                  <p>${description}</p>
-                </article>
-              `,
-            )
-            .join('')}
-        </div>
-      </section>
-
-      <section class="africa-method" id="about" aria-labelledby="method-title">
-        <div>
-          <p class="africa-eyebrow">Methodology</p>
-          <h2 id="method-title">Research first. Access second.</h2>
-        </div>
-        <div class="africa-method-list">
-          ${africaTrades.methods.map((method) => `<span>${method}</span>`).join('')}
-        </div>
-      </section>
-
-      <footer class="africa-footer">
-        <div>
-          <strong>Africa.Trades</strong>
-          <p>
-            Africa.Trades is an informational and research platform. Nothing on this site is
-            investment advice or an offer to buy or sell securities.
-          </p>
+          <strong>africa.trades</strong>
+          <p>Informational only. Not investment advice.</p>
         </div>
         <nav aria-label="Africa.Trades footer">
           <a href="#about">About</a>
-          <a href="#research">Research</a>
-          <a href="#about">Legal</a>
+          <a href="#notes">Notes</a>
           <a href="${partner.ctaHref}">Contact</a>
         </nav>
       </footer>
