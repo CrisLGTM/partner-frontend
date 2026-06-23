@@ -72,13 +72,13 @@ const partners = {
     name: 'Africa Trades',
     domain: 'africa.trades',
     eyebrow: 'AFRICA.TRADES',
-    headline: 'A focused gateway for Africa Trades.',
+    headline: 'African bond markets, made accessible.',
     subtext:
-      'A dedicated partner entry point for Africa Trades users entering DORA through a simple public gateway.',
+      'Access fixed-income opportunities, market access, and trading infrastructure across African markets.',
     bottomLine:
-      'AFRICA.TRADES / PARTNER GATEWAY / POWERED BY DORA / MARKET ACCESS / PUBLIC ENTRY POINT',
+      'AFRICA.TRADES / AFRICAN FIXED INCOME / BONDS / MARKET ACCESS',
     ctaLabel: 'Request Access',
-    ctaMeta: 'Research, data, and relationship-led access.',
+    ctaMeta: 'African fixed-income market access.',
     ctaHref: 'mailto:contact@africa.trades',
     accent: '#79d8a5',
     variant: 'africa',
@@ -226,10 +226,10 @@ function getPartner() {
 }
 
 function renderAfricaTradesLanding(partner) {
-  document.title = 'africa.trades | African Market Notes'
+  document.title = 'africa.trades | African Fixed Income'
   document.documentElement.style.setProperty('--accent', partner.accent)
 
-  const signals = ['FX', 'Commodities', 'Sovereign Debt', 'Private Credit']
+  const signals = ['Bonds', 'Fixed Income', 'Market Access']
 
   return `
     <main class="africa-page">
@@ -238,8 +238,8 @@ function renderAfricaTradesLanding(partner) {
           africa.trades
         </a>
         <nav class="africa-nav" aria-label="Africa.Trades navigation">
+          <a href="#markets">Markets</a>
           <a href="#about">About</a>
-          <a href="#notes">Notes</a>
           <a href="${partner.ctaHref}">Contact</a>
         </nav>
         <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
@@ -247,39 +247,48 @@ function renderAfricaTradesLanding(partner) {
 
       <section class="africa-hero" aria-labelledby="africa-title">
         <div class="africa-hero-copy">
-          <p class="africa-eyebrow">African Market Notes</p>
-          <h1 id="africa-title">African markets, clearly mapped.</h1>
+          <p class="africa-eyebrow">African Fixed Income</p>
+          <h1 id="africa-title">African bond markets, made accessible.</h1>
           <p>
-            Research, market notes, and access signals across African trade, capital flows,
-            commodities, FX, and private markets.
+            Access fixed-income opportunities, market access, and trading infrastructure across African markets.
           </p>
           <div class="africa-actions">
             <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
-            <a class="africa-button africa-button-secondary" href="#notes">Read Notes</a>
+            <a class="africa-button africa-button-secondary" href="#markets">Explore Markets</a>
+          </div>
+        </div>
+        <div class="africa-visual" aria-hidden="true">
+          <div class="africa-orbit">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="africa-visual-card card-primary">
+            <small>AFRICA.TRADES</small>
+            <strong>Bond access</strong>
+            <em>Market gateway</em>
+          </div>
+          <div class="africa-visual-card card-secondary">
+            <small>FIXED INCOME</small>
+            <strong>Sovereign / Corporate</strong>
+          </div>
+          <div class="africa-visual-card card-tertiary">
+            <small>ACCESS</small>
+            <strong>Request-led</strong>
           </div>
         </div>
       </section>
 
-      <section class="africa-signal-row" aria-label="Market coverage signals">
+      <section class="africa-signal-row" id="markets" aria-label="Market access labels">
         ${signals.map((signal) => `<span>${signal}</span>`).join('')}
       </section>
 
-      <section class="africa-explainer" id="about" aria-labelledby="africa-explainer-title">
-        <span>What this is</span>
-        <p id="africa-explainer-title">
-          Africa.Trades is a lightweight research and market access desk for people tracking
-          African markets. It is built for clear context, not noise.
-        </p>
-      </section>
-
-      <footer class="africa-footer" id="notes">
+      <footer class="africa-footer" id="about">
         <div>
           <strong>africa.trades</strong>
-          <p>Informational only. Not investment advice.</p>
+          <p>Informational only.</p>
         </div>
         <nav aria-label="Africa.Trades footer">
           <a href="#about">About</a>
-          <a href="#notes">Notes</a>
           <a href="${partner.ctaHref}">Contact</a>
         </nav>
       </footer>
