@@ -2617,7 +2617,7 @@ h1 {
 .africa-footer {
   position: relative;
   z-index: 1;
-  width: min(1160px, calc(100% - 48px));
+  width: min(1360px, calc(100% - 80px));
   margin: 0 auto;
 }
 
@@ -2679,7 +2679,7 @@ h1 {
 }
 
 .africa-hero-copy {
-  max-width: 760px;
+  max-width: 1040px;
 }
 
 .africa-eyebrow {
@@ -2692,16 +2692,16 @@ h1 {
 }
 
 .africa-hero h1 {
-  max-width: 680px;
+  max-width: 980px;
   margin: 0;
   color: #f8f2df;
-  font-size: clamp(3.2rem, 6.8vw, 6.4rem);
+  font-size: clamp(3.4rem, 6.8vw, 6.9rem);
   line-height: 0.96;
   letter-spacing: 0;
 }
 
 .africa-hero-copy > p:not(.africa-eyebrow) {
-  max-width: 560px;
+  max-width: 680px;
   margin: 22px 0 0;
   color: rgba(246, 240, 223, 0.72);
   font-size: clamp(1rem, 1.5vw, 1.14rem);
@@ -2769,7 +2769,7 @@ h1 {
   .africa-hero,
   .africa-signal-row,
   .africa-footer {
-    width: min(100% - 32px, 1160px);
+    width: min(100% - 32px, 1360px);
   }
 
   .africa-header {
