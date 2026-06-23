@@ -72,20 +72,20 @@ const partners = {
     name: 'Africa Trades',
     domain: 'africa.trades',
     eyebrow: 'AFRICA.TRADES',
-    headline: 'African bond markets, made accessible.',
+    headline: 'Global bond markets, accessible from Africa.',
     subtext:
-      'Access fixed-income opportunities, market access, and trading infrastructure across African markets.',
+      'Access bond trading infrastructure through a clean gateway built for African market participants.',
     bottomLine:
-      'AFRICA.TRADES / AFRICAN FIXED INCOME / BONDS / MARKET ACCESS',
-    ctaLabel: 'Request Access',
-    ctaMeta: 'African fixed-income market access.',
-    ctaHref: 'mailto:contact@africa.trades',
+      'AFRICA.TRADES / GLOBAL BOND MARKETS / FIXED-INCOME ACCESS / AFRICA',
+    ctaLabel: 'Launch App',
+    ctaMeta: 'Fixed-income access for African market participants.',
+    ctaHref: DORA_URL,
     accent: '#79d8a5',
     variant: 'africa',
     metrics: [
-      ['Gateway', 'Africa Trades'],
-      ['Access', 'DORA entry point'],
-      ['Status', 'Ready for page copy'],
+      ['Gateway', 'africa.trades'],
+      ['Access', 'Global bond markets'],
+      ['Audience', 'African market participants'],
     ],
   },
 }
@@ -226,10 +226,11 @@ function getPartner() {
 }
 
 function renderAfricaTradesLanding(partner) {
-  document.title = 'africa.trades | African Fixed Income'
+  document.title = 'africa.trades | Fixed-Income Access'
   document.documentElement.style.setProperty('--accent', partner.accent)
 
   const signals = ['Bonds', 'Fixed Income', 'Market Access']
+  const contactHref = 'mailto:contact@africa.trades'
 
   return `
     <main class="africa-page">
@@ -240,40 +241,21 @@ function renderAfricaTradesLanding(partner) {
         <nav class="africa-nav" aria-label="Africa.Trades navigation">
           <a href="#markets">Markets</a>
           <a href="#about">About</a>
-          <a href="${partner.ctaHref}">Contact</a>
+          <a href="${contactHref}">Contact</a>
         </nav>
-        <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
+        <a class="africa-button africa-button-primary" href="${partner.ctaHref}" rel="noopener noreferrer">Launch App</a>
       </header>
 
       <section class="africa-hero" aria-labelledby="africa-title">
         <div class="africa-hero-copy">
-          <p class="africa-eyebrow">African Fixed Income</p>
-          <h1 id="africa-title">African bond markets, made accessible.</h1>
+          <p class="africa-eyebrow">FIXED-INCOME ACCESS</p>
+          <h1 id="africa-title">Global bond markets, accessible from Africa.</h1>
           <p>
-            Access fixed-income opportunities, market access, and trading infrastructure across African markets.
+            Access bond trading infrastructure through a clean gateway built for African market participants.
           </p>
           <div class="africa-actions">
-            <a class="africa-button africa-button-primary" href="${partner.ctaHref}">Request Access</a>
+            <a class="africa-button africa-button-primary" href="${partner.ctaHref}" rel="noopener noreferrer">Launch App</a>
             <a class="africa-button africa-button-secondary" href="#markets">Explore Markets</a>
-          </div>
-        </div>
-        <div class="africa-visual" aria-hidden="true">
-          <div class="africa-orbit">
-            <span></span>
-            <span></span>
-          </div>
-          <div class="africa-visual-card card-primary">
-            <small>AFRICA.TRADES</small>
-            <strong>Bond access</strong>
-            <em>Market gateway</em>
-          </div>
-          <div class="africa-visual-card card-secondary">
-            <small>FIXED INCOME</small>
-            <strong>Sovereign / Corporate</strong>
-          </div>
-          <div class="africa-visual-card card-tertiary">
-            <small>ACCESS</small>
-            <strong>Request-led</strong>
           </div>
         </div>
       </section>
@@ -289,7 +271,7 @@ function renderAfricaTradesLanding(partner) {
         </div>
         <nav aria-label="Africa.Trades footer">
           <a href="#about">About</a>
-          <a href="${partner.ctaHref}">Contact</a>
+          <a href="${contactHref}">Contact</a>
         </nav>
       </footer>
     </main>
