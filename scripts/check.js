@@ -19,7 +19,12 @@ if (missingFiles.length > 0) {
 const html = readFileSync('index.html', 'utf8')
 const js = readFileSync('src/main.js', 'utf8')
 
-for (const route of ['/partners/maxos', '/partners/polytrade']) {
+for (const route of [
+  '/partners/maxos',
+  '/partners/polytrade',
+  '/partners/duration',
+  '/partners/bonddesk',
+]) {
   if (!js.includes(route)) {
     console.error(`Missing route config for ${route}`)
     process.exit(1)

@@ -67,6 +67,28 @@ const partners = {
     ],
     markets: ['Timing', 'Signals', 'Workflow', 'DORA gateway'],
   },
+  '/partners/bonddesk': {
+    name: 'BondDesk',
+    domain: 'BondDesk',
+    accent: '#78b9ff',
+    tone: 'bonddesk',
+    eyebrow: 'Fixed-income gateway',
+    headline: 'Bond access, routed through DORA.',
+    subtext:
+      'A dedicated market desk for users exploring supported fixed-income markets and activity through DORA.',
+    stats: [
+      ['Partner', 'BondDesk'],
+      ['Focus', 'Fixed income'],
+      ['Flow', 'DORA access'],
+    ],
+    featureTitle: 'A direct front door for bond-market partner traffic.',
+    features: [
+      'Dedicated public route for BondDesk users.',
+      'Fixed-income positioning aligned with supported DORA markets.',
+      'Single launch path into the DORA authentication flow.',
+    ],
+    markets: ['Supported bonds', 'Yield curve', 'Market activity', 'DORA gateway'],
+  },
 }
 
 function normalizePath() {
@@ -103,6 +125,10 @@ function renderGateway(partner) {
 
   if (partner.tone === 'duration') {
     return renderDurationInstitutional(partner)
+  }
+
+  if (partner.tone === 'bonddesk') {
+    return renderBondDesk()
   }
 
   return renderShell(
@@ -176,6 +202,296 @@ function renderGateway(partner) {
     `,
     partner.tone,
   )
+}
+
+function renderBondDesk() {
+  document.title = 'DORA Markets | Fixed-Income Explorer'
+  document.documentElement.style.setProperty('--accent', '#1f6feb')
+
+  const tickerItems = [
+    ['UST 2Y', '4.71%', '-1 bp', 'down'],
+    ['UST 10Y', '4.28%', '+3 bps', 'up'],
+    ['Active Bonds', '128', '+4', 'up'],
+    ['DORA Markets', '24', 'live', 'flat'],
+    ['Latest Tx', 'NVDA 2050', '2 min ago', 'flat'],
+    ['24H Transactions', '1,842', '+8.1%', 'up'],
+  ]
+
+  const bondRows = [
+    ['NVDA 2050', 'Nvidia', '8.92%', '79.20', '2050', '$2.1M', '2 min ago', '+24 bps', 'up'],
+    ['AAPL 2032', 'Apple', '5.41%', '96.80', '2032', '$860K', '9 min ago', '-6 bps', 'down'],
+    ['TSLA 2029', 'Tesla', '7.36%', '88.40', '2029', '$1.4M', '14 min ago', '+11 bps', 'up'],
+    ['MSTR 2030', 'MicroStrategy', '9.18%', '76.50', '2030', '$720K', '21 min ago', '+42 bps', 'up'],
+    ['AMC 2028', 'AMC', '10.24%', '72.10', '2028', '$510K', '27 min ago', '+31 bps', 'up'],
+    ['MSFT 2033', 'Microsoft', '4.92%', '98.35', '2033', '$690K', '33 min ago', '-3 bps', 'down'],
+    ['GOOGL 2030', 'Alphabet', '5.08%', '97.10', '2030', '$760K', '41 min ago', '+2 bps', 'up'],
+    ['AMZN 2031', 'Amazon', '5.36%', '95.90', '2031', '$830K', '52 min ago', '-4 bps', 'down'],
+  ]
+
+  const latestActivity = [
+    ['NVDA 2050', 'Last tx 2 min ago', '$2.1M 24H activity', 'flat'],
+    ['MSTR 2030', 'Last tx 21 min ago', '+42 bps', 'up'],
+    ['AAPL 2032', 'Last tx 9 min ago', '-6 bps', 'down'],
+  ]
+
+  const poolGroups = [
+    ['Highest Yield Pools', 'MSTR 2030', '9.18% YTM', '$720K activity'],
+    ['Largest Liquidity Pools', 'NVDA 2050', '8.92% YTM', '$2.1M activity'],
+    ['Featured Pools', 'TSLA 2029', '7.36% YTM', '$1.4M activity'],
+    ['Near-Term Maturities', 'AAPL 2032', '5.41% YTM', '$860K activity'],
+  ]
+
+  const updates = [
+    [
+      'Market Brief',
+      'Treasury yields steady as traders wait for Fed signals',
+      'Rates remain range-bound as investors monitor inflation data, Treasury issuance, and longer-duration demand.',
+      '18 min ago',
+    ],
+    [
+      'Curve Watch',
+      'What the 2Y/10Y curve is signaling this week',
+      'Front-end rates remain elevated while the long end moves on issuance and growth expectations.',
+      '34 min ago',
+    ],
+    [
+      'DORA Activity',
+      'Large-cap issuer markets lead recent bond activity',
+      'Recent DORA market activity remains concentrated around NVDA, AAPL, TSLA, and MSTR maturities.',
+      '1 hr ago',
+    ],
+  ]
+
+  // Curve paths use frontend placeholder data until live per-asset curve data is available.
+  return `
+    <main class="bond-desk">
+      <header class="bd-header">
+        <a class="bd-wordmark" href="/partners/bonddesk" aria-label="DORA Markets home">
+          <strong>DORA Markets</strong>
+        </a>
+        <nav class="bd-nav" aria-label="DORA Markets navigation">
+          <a href="#overview">Overview</a>
+          <a href="#briefs">Market Briefs</a>
+          <a href="#yield-curve">Yield Curves</a>
+          <a href="#watchlist">Watchlist</a>
+          <a href="#explorer">Explorer</a>
+        </nav>
+        <form class="bd-search" role="search">
+          <label class="sr-only" for="bd-search-input">Search bonds, issuers, markets, transactions</label>
+          <input id="bd-search-input" type="search" placeholder="Search bonds, issuers, markets, transactions" />
+        </form>
+        <a class="bd-primary" href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+      </header>
+
+      <section class="bd-ticker" aria-label="Market ticker">
+        ${tickerItems
+          .map(
+            ([label, value, change, direction]) => `
+              <div class="bd-ticker-item">
+                <span>${label}</span>
+                <strong>${value}</strong>
+                <em class="bd-${direction}">${change}</em>
+              </div>
+            `,
+          )
+          .join('')}
+      </section>
+
+      <div class="bd-shell">
+        <section class="bd-product-intro" aria-label="DORA Markets overview">
+          <div>
+            <span>DORA fixed-income explorer</span>
+            <h1>Live bond markets, yield context, and DORA activity in one public desk.</h1>
+          </div>
+          <p>
+            Monitor supported bond markets, scan active issuers, review rate context, and launch
+            into DORA when you are ready to trade.
+          </p>
+        </section>
+
+        <section class="bd-main-grid" id="markets" aria-label="DORA market overview">
+          <article class="bd-panel bd-brief" hidden>
+            <div class="bd-panel-kicker">Market Briefs</div>
+            <h1>DORA market notes for rates, issuers, and activity.</h1>
+            <p>
+              Supporting context for active DORA bond markets, yield curve movement,
+              and notable issuer activity.
+            </p>
+            <div class="bd-meta">Market Brief • 5 min read • Updated 12 min ago</div>
+            <div class="bd-story-links">
+              <span>What the 2Y/10Y curve is signaling this week</span>
+              <span>Which DORA bond markets are seeing the most activity</span>
+            </div>
+          </article>
+
+          <section class="bd-panel bd-market-table" aria-labelledby="live-bond-market-title">
+            <div class="bd-panel-header">
+              <h2 id="live-bond-market-title">Live DORA Markets</h2>
+            </div>
+            <div class="bd-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Market</th>
+                    <th>Issuer</th>
+                    <th>YTM</th>
+                    <th>Price</th>
+                    <th>Maturity</th>
+                    <th>24H Activity</th>
+                    <th>Last Tx</th>
+                    <th>Change</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${bondRows
+                    .map(
+                      ([bond, issuer, ytm, price, maturity, activity, lastTx, change, direction]) => `
+                        <tr>
+                          <td><strong>${bond}</strong></td>
+                          <td>${issuer}</td>
+                          <td class="bd-ytm">${ytm}</td>
+                          <td>${price}</td>
+                          <td>${maturity}</td>
+                          <td>${activity}</td>
+                          <td>${lastTx}</td>
+                          <td class="bd-${direction}">${change}</td>
+                        </tr>
+                      `,
+                    )
+                    .join('')}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <aside class="bd-sidebar" aria-label="Rates, watchlist, and market activity">
+            <section class="bd-side-card">
+              <h2>Rates Snapshot</h2>
+              <dl>
+                <div><dt>Fed Funds Target</dt><dd>5.25% - 5.50%</dd></div>
+                <div><dt>2Y / 10Y Curve</dt><dd>-43 bps</dd></div>
+                <div><dt>Market Mood</dt><dd>Neutral</dd></div>
+                <div><dt>Duration Bias</dt><dd>Short</dd></div>
+              </dl>
+            </section>
+            <section class="bd-side-card" id="watchlist">
+              <h2>Watchlist</h2>
+              <div class="bd-watchlist">
+                <div><strong>NVDA 2050</strong><span>8.92% YTM</span><em class="bd-up">+24 bps</em></div>
+                <div><strong>AAPL 2032</strong><span>5.41% YTM</span><em class="bd-down">-6 bps</em></div>
+                <div><strong>TSLA 2029</strong><span>7.36% YTM</span><em class="bd-up">+11 bps</em></div>
+                <div><strong>MSTR 2030</strong><span>9.18% YTM</span><em class="bd-up">+42 bps</em></div>
+              </div>
+            </section>
+            <section class="bd-side-card" id="explorer">
+              <h2>Latest Market Activity</h2>
+              <div class="bd-activity-list">
+                ${latestActivity
+                  .map(
+                    ([market, lastTx, detail, direction]) => `
+                      <div>
+                        <strong>${market}</strong>
+                        <span>${lastTx}</span>
+                        <em class="bd-${direction}">${detail}</em>
+                      </div>
+                    `,
+                  )
+                  .join('')}
+              </div>
+            </section>
+          </aside>
+        </section>
+
+        <section class="bd-section" id="overview" aria-labelledby="pool-overview-title">
+          <div class="bd-section-heading">
+            <h2 id="pool-overview-title">Markets Overview</h2>
+          </div>
+          <div class="bd-pool-grid">
+            ${poolGroups
+              .map(
+                ([label, market, ytm, activity]) => `
+                  <article class="bd-pool-card">
+                    <span>${label}</span>
+                    <strong>${market}</strong>
+                    <dl>
+                      <div><dt>Yield</dt><dd>${ytm}</dd></div>
+                      <div><dt>24H Activity</dt><dd>${activity}</dd></div>
+                    </dl>
+                  </article>
+                `,
+              )
+              .join('')}
+          </div>
+        </section>
+
+        <section class="bd-split-section">
+          <article class="bd-panel bd-yield-panel" id="yield-curve">
+            <div class="bd-panel-header">
+              <h2>Multi-Asset Yield Curves</h2>
+            </div>
+            <div class="bd-curve-controls" aria-label="Displayed assets">
+              <span>AMC</span>
+              <span>MSTR</span>
+              <span>TSLA</span>
+              <span>NVDA</span>
+            </div>
+            <div class="bd-curve-chart" aria-label="Multi-asset yield curve preview">
+              <span class="bd-axis-y">Yield %</span>
+              <svg viewBox="0 0 620 260" role="img" aria-labelledby="bd-curve-title">
+                <title id="bd-curve-title">Yield curves from 1Y to 10Y for AMC, MSTR, TSLA, and NVDA</title>
+                <path class="bd-chart-grid" d="M42 52H580M42 112H580M42 172H580M42 232H580"></path>
+                <path class="bd-curve-line bd-curve-amc" d="M52 188 C136 172 202 154 266 132 C346 104 430 86 572 70"></path>
+                <path class="bd-curve-line bd-curve-mstr" d="M52 156 C138 142 204 126 268 104 C358 80 438 66 572 52"></path>
+                <path class="bd-curve-line bd-curve-tsla" d="M52 206 C138 188 214 166 286 146 C372 120 452 104 572 92"></path>
+                <path class="bd-curve-line bd-curve-nvda" d="M52 176 C144 158 224 140 302 116 C386 92 466 78 572 64"></path>
+              </svg>
+              <div class="bd-maturities"><span>1Y</span><span>2Y</span><span>3Y</span><span>5Y</span><span>7Y</span><span>10Y</span></div>
+              <span class="bd-axis-x">Maturity</span>
+            </div>
+            <div class="bd-curve-legend" aria-label="Curve legend">
+              <span><i class="bd-legend-amc"></i>AMC</span>
+              <span><i class="bd-legend-mstr"></i>MSTR</span>
+              <span><i class="bd-legend-tsla"></i>TSLA</span>
+              <span><i class="bd-legend-nvda"></i>NVDA</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="bd-section bd-briefs-section" id="briefs" aria-labelledby="market-briefs-title">
+          <div class="bd-section-heading">
+            <h2 id="market-briefs-title">Market Briefs</h2>
+          </div>
+          <div class="bd-update-grid">
+            ${updates
+              .map(
+                ([category, title, summary, timestamp]) => `
+                  <article class="bd-update-card">
+                    <span>${category}</span>
+                    <h3>${title}</h3>
+                    <p>${summary}</p>
+                    <small>${timestamp}</small>
+                  </article>
+                `,
+              )
+              .join('')}
+          </div>
+        </section>
+      </div>
+
+      <footer class="bd-footer">
+        <div>
+          <strong>DORA Markets</strong>
+          <p>Fixed-income market data, yield context, transaction activity, and access to DORA bond markets.</p>
+        </div>
+        <nav aria-label="DORA Markets footer">
+          <a href="#overview">Overview</a>
+          <a href="#briefs">Market Briefs</a>
+          <a href="#markets">Markets</a>
+          <a href="${DORA_URL}" rel="noopener noreferrer">Launch App</a>
+        </nav>
+      </footer>
+    </main>
+  `
 }
 
 function renderDurationInstitutional(partner) {
