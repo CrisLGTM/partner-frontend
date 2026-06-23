@@ -6,6 +6,7 @@ Standalone public partner gateway frontend for DORA.
 
 - `/partners/maxos` for `maxos.trade`
 - `/partners/polytrade` for `polytrade.capital`
+- `/partners/africa-trades` for `africa.trades`
 
 ## Local Preview
 
@@ -17,6 +18,7 @@ Then open:
 
 - `http://localhost:4173/partners/maxos`
 - `http://localhost:4173/partners/polytrade`
+- `http://localhost:4173/partners/africa-trades`
 
 ## CTA Target
 

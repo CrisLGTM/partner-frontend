@@ -68,6 +68,26 @@ const partners = {
     metrics: ['Tokenized Bonds', 'FX / EURUSD', 'RWAs', 'Collectibles', 'Private Credit', 'Digital Markets'],
     labels: ['EUR/USD 1.0842', 'US10Y 4.31%', 'RWA INDEX +1.8%', 'BTC 68,420', 'FLOW ACTIVE', 'LIVE ROUTING'],
   },
+  '/partners/africa-trades': {
+    name: 'Africa Trades',
+    domain: 'africa.trades',
+    eyebrow: 'AFRICA.TRADES',
+    headline: 'A focused gateway for Africa Trades.',
+    subtext:
+      'A dedicated partner entry point for Africa Trades users entering DORA through a simple public gateway.',
+    bottomLine:
+      'AFRICA.TRADES / PARTNER GATEWAY / POWERED BY DORA / MARKET ACCESS / PUBLIC ENTRY POINT',
+    ctaLabel: 'Launch App',
+    ctaMeta: 'Partner gateway. DORA-powered access.',
+    ctaHref: DORA_URL,
+    accent: '#79d8a5',
+    variant: 'africa',
+    metrics: [
+      ['Gateway', 'Africa Trades'],
+      ['Access', 'DORA entry point'],
+      ['Status', 'Ready for page copy'],
+    ],
+  },
 }
 
 function renderMaxosLanding(partner) {
@@ -334,6 +354,10 @@ function renderIndex() {
           <a class="directory-card" href="/partners/polytrade">
             <strong>Polytrade</strong>
             <span>polytrade.capital</span>
+          </a>
+          <a class="directory-card" href="/partners/africa-trades">
+            <strong>Africa Trades</strong>
+            <span>africa.trades</span>
           </a>
         </div>
       </section>
