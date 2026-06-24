@@ -68,6 +68,26 @@ const partners = {
     metrics: ['Tokenized Bonds', 'FX / EURUSD', 'RWAs', 'Collectibles', 'Private Credit', 'Digital Markets'],
     labels: ['EUR/USD 1.0842', 'US10Y 4.31%', 'RWA INDEX +1.8%', 'BTC 68,420', 'FLOW ACTIVE', 'LIVE ROUTING'],
   },
+  '/partners/duration': {
+    name: 'Duration',
+    domain: 'duration.io',
+    eyebrow: 'DURATION.IO',
+    headline: 'Market infrastructure for tokenized fixed income.',
+    subtext:
+      'Access tokenized bonds, real-world assets, and duration-based markets through a Duration gateway powered by DORA.',
+    bottomLine:
+      'DURATION.IO / TOKENIZED FIXED INCOME / RWA MARKETS / DORA-POWERED EXECUTION',
+    ctaLabel: 'Launch App',
+    ctaMeta: 'Tokenized fixed-income access. DORA-powered execution.',
+    ctaHref: DORA_URL,
+    accent: '#9fb7ff',
+    variant: 'rwa',
+    metrics: [
+      ['Market Access', 'Tokenized bonds and RWAs'],
+      ['Execution', 'DORA gateway flow'],
+      ['Infrastructure', 'Duration-based markets'],
+    ],
+  },
   '/partners/africa-trades': {
     name: 'Africa Trades',
     domain: 'africa.trades',
@@ -281,8 +301,8 @@ function renderAfricaTradesLanding(partner) {
 function renderGateway(partner) {
   document.title = `${partner.domain} | ${partner.ctaLabel}`
   document.documentElement.style.setProperty('--accent', partner.accent)
-  const isMaxos = partner.variant === 'rwa'
-  const isPolytrade = partner.variant === 'abstract'
+  const isMaxos = partner.domain === 'maxos.trade'
+  const isPolytrade = partner.domain === 'polytrade.capital'
 
   if (partner.variant === 'africa') {
     return renderAfricaTradesLanding(partner)
@@ -411,6 +431,10 @@ function renderIndex() {
           <a class="directory-card" href="/partners/polytrade">
             <strong>Polytrade</strong>
             <span>polytrade.capital</span>
+          </a>
+          <a class="directory-card" href="/partners/duration">
+            <strong>Duration</strong>
+            <span>duration.io</span>
           </a>
           <a class="directory-card" href="/partners/africa-trades">
             <strong>Africa Trades</strong>

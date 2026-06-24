@@ -1,11 +1,13 @@
-# Partner Frontend
+# DORA Partner Gateways
 
 Standalone public partner gateway frontend for DORA.
 
 ## Routes
 
+- `/` gateway directory
 - `/partners/maxos` for `maxos.trade`
 - `/partners/polytrade` for `polytrade.capital`
+- `/partners/duration` for `duration.io`
 - `/partners/africa-trades` for `africa.trades`
 
 ## Local Preview
@@ -16,8 +18,10 @@ npm run dev
 
 Then open:
 
+- `http://localhost:4173/`
 - `http://localhost:4173/partners/maxos`
 - `http://localhost:4173/partners/polytrade`
+- `http://localhost:4173/partners/duration`
 - `http://localhost:4173/partners/africa-trades`
 
 ## CTA Target
@@ -25,10 +29,16 @@ Then open:
 The current CTA target is configured in `src/main.js`:
 
 ```js
-const DORA_URL = 'https://dora.tech'
+const DORA_URL = 'https://dora-prod.vercel.app/auth/sign-in'
 ```
 
 Replace this with the final production DORA URL if it differs.
+
+## Checks
+
+```bash
+npm run check
+```
 
 ## Deployment
 
