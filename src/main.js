@@ -323,15 +323,9 @@ function getFeaturedBondDeskHeadlines(headlines) {
     })
 }
 
-function getLatestBondDeskHeadlines(headlines) {
-  return headlines
-    .filter((article) => !article.featured)
-    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-}
 
 function renderBondDeskHeadlinesSection(headlineSet) {
   const featuredHeadlines = getFeaturedBondDeskHeadlines(headlineSet?.headlines ?? [])
-  const latestHeadlines = getLatestBondDeskHeadlines(headlineSet?.headlines ?? [])
 
   return `
     <section class="bond-headlines-section" aria-labelledby="bond-headlines-title">
@@ -355,12 +349,6 @@ function renderBondDeskHeadlinesSection(headlineSet) {
           ${renderBondDeskHeadlineCards(featuredHeadlines, 'featured')}
         </div>
       </div>
-      <div class="bond-headlines-block">
-        <h2>Latest Headlines</h2>
-        <div class="bond-headlines-grid" data-bond-headlines-grid>
-          ${renderBondDeskHeadlineCards(latestHeadlines)}
-        </div>
-      </div>
     </section>
   `
 }
@@ -368,25 +356,30 @@ function renderBondDeskHeadlinesSection(headlineSet) {
 function renderBondDeskHeadlineCards(headlines, variant = 'standard') {
   return headlines
     .map((article) => {
-      const link = article.url
-        ? `<a class="bond-headline-link" href="${article.url}" target="_blank" rel="noopener noreferrer">Read source →</a>`
-        : ''
-      const title = article.url
-        ? `<a href="${article.url}" target="_blank" rel="noopener noreferrer">${article.title}</a>`
-        : article.title
-
-      return `
-        <article class="bond-headline-card ${variant === 'featured' ? 'bond-headline-card-featured' : ''}" data-headline-id="${article.id}">
+      const cardClass = `bond-headline-card ${variant === 'featured' ? 'bond-headline-card-featured' : ''}`
+      const cardContent = `
           <div class="bond-headline-meta">
             <span>${article.source}</span>
             <span>${article.category}</span>
           </div>
-          <h3>${title}</h3>
+          <h3>${article.title}</h3>
           <p class="bond-headline-summary">${article.summary}</p>
           <div class="bond-headline-footer">
             <span>${article.timeLabel}</span>
-            ${link}
           </div>
+      `
+
+      if (article.url) {
+        return `
+        <a class="${cardClass} bond-headline-card-link" href="${article.url}" target="_blank" rel="noopener noreferrer" data-headline-id="${article.id}">
+          ${cardContent}
+        </a>
+      `
+      }
+
+      return `
+        <article class="${cardClass}" data-headline-id="${article.id}">
+          ${cardContent}
         </article>
       `
     })
@@ -411,7 +404,7 @@ function initBondDeskHeadlineRotation() {
 
     isLoading = true
     button.disabled = true
-    button.textContent = 'Refreshing selection…'
+    button.textContent = 'Refreshing selection...'
 
     window.setTimeout(() => {
       bondDeskActiveSetIndex = (bondDeskActiveSetIndex + 1) % headlineSets.length

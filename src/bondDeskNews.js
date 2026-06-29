@@ -52,6 +52,8 @@ export const headlineSets = [
         publishedAt: '2026-06-26T15:30:00Z',
         timeLabel: '3 days ago',
         url: 'https://www.marketwatch.com/livecoverage/stock-market-today-dow-s-p-500-nasdaq-micron-earnings-results-pce-inflation-data/card/u-s-bond-market-rises-as-treasury-yields-fall-TN9gu42L5lb3nHdi4MwM',
+        featured: true,
+        priority: 4,
       },
       {
         id: 'treasury-yields-fall-oil-prices',
@@ -141,6 +143,8 @@ export const headlineSets = [
         publishedAt: '2026-06-28T13:00:00Z',
         timeLabel: 'Yesterday',
         url: 'https://fred.stlouisfed.org/series/BAMLC0A0CM',
+        featured: true,
+        priority: 4,
       },
       {
         id: 'corporate-refinancing-window',
@@ -230,6 +234,8 @@ export const headlineSets = [
         publishedAt: '2026-06-29T08:15:00Z',
         timeLabel: 'Today',
         url: 'https://www.bis.org/statistics/secstats.htm',
+        featured: true,
+        priority: 4,
       },
       {
         id: 'core-bond-etf-demand',

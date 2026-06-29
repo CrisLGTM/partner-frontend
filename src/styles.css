@@ -2804,7 +2804,7 @@ h1 {
 }
 
 .bond-headlines-section {
-  width: min(1040px, 100%);
+  width: min(1248px, 100%);
   margin: 0 auto;
   padding: 18px;
   border: 1px solid rgba(247, 242, 232, 0.14);
@@ -2867,11 +2867,6 @@ h1 {
   font-weight: 760;
 }
 
-.bond-headlines-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-}
 
 .bond-headlines-block {
   margin-top: 18px;
@@ -2888,7 +2883,7 @@ h1 {
 
 .bond-featured-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.12fr) repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -2934,12 +2929,26 @@ h1 {
   line-height: 1.16;
 }
 
-.bond-headline-card h3 a {
+.bond-headline-card-link {
   color: inherit;
+  cursor: pointer;
   text-decoration: none;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
-.bond-headline-card h3 a:hover {
+.bond-headline-card-link:hover,
+.bond-headline-card-link:focus-visible {
+  background: rgba(240, 196, 90, 0.09);
+  border-color: rgba(240, 196, 90, 0.46);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.bond-headline-card-link:hover h3,
+.bond-headline-card-link:focus-visible h3 {
   color: #f0c45a;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -2967,15 +2976,6 @@ h1 {
   text-transform: uppercase;
 }
 
-.bond-headline-link {
-  color: #f0c45a;
-  text-decoration: none;
-}
-
-.bond-headline-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 
 @media (max-width: 860px) {
   .bond-headlines-preview {
@@ -2987,8 +2987,7 @@ h1 {
   }
 
   .bond-headlines-header,
-  .bond-featured-grid,
-  .bond-headlines-grid {
+  .bond-featured-grid {
     grid-template-columns: 1fr;
   }
 
