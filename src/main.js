@@ -1,3 +1,5 @@
+import { headlineSets } from './bondDeskNews.js'
+
 const DORA_URL = 'https://dora-prod.vercel.app/auth/sign-in'
 
 const maxosLanding = {
@@ -298,6 +300,132 @@ function renderAfricaTradesLanding(partner) {
   `
 }
 
+let bondDeskActiveSetIndex = 0
+
+function renderBondDeskHeadlinesPreview() {
+  document.title = 'BondDesk Headlines Prototype'
+  document.documentElement.style.setProperty('--accent', '#f0c45a')
+  const activeSet = headlineSets[bondDeskActiveSetIndex]
+
+  return `
+    <main class="bond-headlines-preview">
+      ${renderBondDeskHeadlinesSection(activeSet)}
+    </main>
+  `
+}
+
+function getFeaturedBondDeskHeadlines(headlines) {
+  return headlines
+    .filter((article) => article.featured)
+    .sort((a, b) => {
+      const priorityDelta = (a.priority ?? 999) - (b.priority ?? 999)
+      return priorityDelta || Date.parse(b.publishedAt) - Date.parse(a.publishedAt)
+    })
+}
+
+function getLatestBondDeskHeadlines(headlines) {
+  return headlines
+    .filter((article) => !article.featured)
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+}
+
+function renderBondDeskHeadlinesSection(headlineSet) {
+  const featuredHeadlines = getFeaturedBondDeskHeadlines(headlineSet?.headlines ?? [])
+  const latestHeadlines = getLatestBondDeskHeadlines(headlineSet?.headlines ?? [])
+
+  return `
+    <section class="bond-headlines-section" aria-labelledby="bond-headlines-title">
+      <div class="bond-headlines-header">
+        <div>
+          <h1 id="bond-headlines-title">Bond Market Headlines</h1>
+          <p>Curated fixed-income coverage from major market sources.</p>
+        </div>
+        <div class="bond-headlines-actions">
+          <button class="bond-headlines-button" type="button" data-bond-headlines-refresh>
+            Refresh selection
+          </button>
+          <p class="bond-headlines-status" data-bond-headlines-status>
+            Updated: latest curated set
+          </p>
+        </div>
+      </div>
+      <div class="bond-headlines-block">
+        <h2>Top Stories</h2>
+        <div class="bond-featured-grid">
+          ${renderBondDeskHeadlineCards(featuredHeadlines, 'featured')}
+        </div>
+      </div>
+      <div class="bond-headlines-block">
+        <h2>Latest Headlines</h2>
+        <div class="bond-headlines-grid" data-bond-headlines-grid>
+          ${renderBondDeskHeadlineCards(latestHeadlines)}
+        </div>
+      </div>
+    </section>
+  `
+}
+
+function renderBondDeskHeadlineCards(headlines, variant = 'standard') {
+  return headlines
+    .map((article) => {
+      const link = article.url
+        ? `<a class="bond-headline-link" href="${article.url}" target="_blank" rel="noopener noreferrer">Read source →</a>`
+        : ''
+      const title = article.url
+        ? `<a href="${article.url}" target="_blank" rel="noopener noreferrer">${article.title}</a>`
+        : article.title
+
+      return `
+        <article class="bond-headline-card ${variant === 'featured' ? 'bond-headline-card-featured' : ''}" data-headline-id="${article.id}">
+          <div class="bond-headline-meta">
+            <span>${article.source}</span>
+            <span>${article.category}</span>
+          </div>
+          <h3>${title}</h3>
+          <p class="bond-headline-summary">${article.summary}</p>
+          <div class="bond-headline-footer">
+            <span>${article.timeLabel}</span>
+            ${link}
+          </div>
+        </article>
+      `
+    })
+    .join('')
+}
+
+function initBondDeskHeadlineRotation() {
+  const button = document.querySelector('[data-bond-headlines-refresh]')
+  const section = document.querySelector('.bond-headlines-section')
+  const status = document.querySelector('[data-bond-headlines-status]')
+
+  if (!button || !section || !status || headlineSets.length === 0) {
+    return
+  }
+
+  let isLoading = false
+
+  button.addEventListener('click', () => {
+    if (isLoading) {
+      return
+    }
+
+    isLoading = true
+    button.disabled = true
+    button.textContent = 'Refreshing selection…'
+
+    window.setTimeout(() => {
+      bondDeskActiveSetIndex = (bondDeskActiveSetIndex + 1) % headlineSets.length
+      section.outerHTML = renderBondDeskHeadlinesSection(headlineSets[bondDeskActiveSetIndex])
+      initBondDeskHeadlineRotation()
+      const nextStatus = document.querySelector('[data-bond-headlines-status]')
+      if (nextStatus) {
+        nextStatus.textContent = 'Updated: just now'
+      }
+      isLoading = false
+    }, 650)
+  })
+}
+
 function renderGateway(partner) {
   document.title = `${partner.domain} | ${partner.ctaLabel}`
   document.documentElement.style.setProperty('--accent', partner.accent)
@@ -463,5 +591,16 @@ function renderNotFound() {
 const app = document.querySelector('#app')
 const partner = getPartner()
 const path = window.location.pathname.replace(/\/$/, '')
+const isBondDeskHeadlinesPreview = path === '/partners/bonddesk'
 
-app.innerHTML = partner ? renderGateway(partner) : path === '' ? renderIndex() : renderNotFound()
+app.innerHTML = isBondDeskHeadlinesPreview
+  ? renderBondDeskHeadlinesPreview()
+  : partner
+    ? renderGateway(partner)
+    : path === ''
+      ? renderIndex()
+      : renderNotFound()
+
+if (isBondDeskHeadlinesPreview) {
+  initBondDeskHeadlineRotation()
+}
