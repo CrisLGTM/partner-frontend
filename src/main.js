@@ -94,20 +94,20 @@ const partners = {
     name: 'Africa Trades',
     domain: 'africa.trades',
     eyebrow: 'AFRICA.TRADES',
-    headline: 'Global bond markets, accessible from Africa.',
+    headline: 'Bond market access for Africa-focused trading.',
     subtext:
-      'Access bond trading infrastructure through a clean gateway built for African market participants.',
+      'A professional gateway for discovering, viewing, and trading bond markets through a focused market interface.',
     bottomLine:
-      'AFRICA.TRADES / GLOBAL BOND MARKETS / FIXED-INCOME ACCESS / AFRICA',
+      'AFRICA.TRADES / BOND MARKETS / AFRICA-FOCUSED MARKET ACCESS',
     ctaLabel: 'Launch App',
-    ctaMeta: 'Fixed-income access for African market participants.',
+    ctaMeta: 'Africa-focused market access.',
     ctaHref: DORA_URL,
     accent: '#79d8a5',
     variant: 'africa',
     metrics: [
       ['Gateway', 'africa.trades'],
       ['Access', 'Global bond markets'],
-      ['Audience', 'African market participants'],
+      ['Audience', 'Africa-focused trading'],
     ],
   },
 }
@@ -251,53 +251,106 @@ function renderAfricaTradesLanding(partner) {
   document.title = 'africa.trades | Fixed-Income Access'
   document.documentElement.style.setProperty('--accent', partner.accent)
 
-  const signals = ['Bonds', 'Fixed Income', 'Market Access']
-  const contactHref = 'mailto:contact@africa.trades'
+  const tickerItems = [
+    'Government Bond 2031 Open',
+    'Corporate Bond 2033 Active',
+    'Government Bond 2035 Open',
+    'Corporate Bond 2029 Active',
+  ]
 
   return `
-    <main class="africa-page">
+    <main class="africa-page" style="--mouse-x: 50%; --mouse-y: 40%; --tilt-x: 0deg; --tilt-y: 0deg;">
+      <div class="africa-spotlight" aria-hidden="true"></div>
       <header class="africa-header">
         <a class="africa-wordmark" href="/partners/africa-trades" aria-label="Africa.Trades home">
           africa.trades
         </a>
         <nav class="africa-nav" aria-label="Africa.Trades navigation">
-          <a href="#markets">Markets</a>
-          <a href="#about">About</a>
-          <a href="${contactHref}">Contact</a>
+          <a href="/partners/africa-trades" aria-current="page">Home</a>
+          <a href="#market-viewer">Market Viewer</a>
         </nav>
         <a class="africa-button africa-button-primary" href="${partner.ctaHref}" rel="noopener noreferrer">Launch App</a>
       </header>
 
-      <section class="africa-hero" aria-labelledby="africa-title">
-        <div class="africa-hero-copy">
-          <p class="africa-eyebrow">FIXED-INCOME ACCESS</p>
-          <h1 id="africa-title">Global bond markets, accessible from Africa.</h1>
+      <section class="africa-reference-hero" aria-labelledby="africa-title">
+        <div class="africa-hero-image" aria-hidden="true"></div>
+        <div class="africa-hero-grid" aria-hidden="true"></div>
+        <div class="arena-lines" aria-hidden="true">
+          <span class="arena-line line-a"></span>
+          <span class="arena-line line-b"></span>
+          <span class="arena-line line-c"></span>
+          <span class="arena-particle particle-a"></span>
+          <span class="arena-particle particle-b"></span>
+          <span class="arena-particle particle-c"></span>
+        </div>
+
+        <div class="africa-reference-copy">
+          <p class="africa-reference-kicker">AFRICA.TRADES</p>
+          <h1 id="africa-title">africa.trades</h1>
+          <h2>Bond access for Africa.</h2>
           <p>
-            Access bond trading infrastructure through a clean gateway built for African market participants.
+            View and trade government and corporate bond markets through one focused professional interface.
           </p>
-          <div class="africa-actions">
+          <div class="africa-reference-actions">
             <a class="africa-button africa-button-primary" href="${partner.ctaHref}" rel="noopener noreferrer">Launch App</a>
-            <a class="africa-button africa-button-secondary" href="#markets">Explore Markets</a>
+            <a class="africa-button africa-button-secondary" href="#market-viewer">Market Viewer</a>
           </div>
         </div>
+
+        <section class="africa-reference-ticker" id="market-viewer" aria-label="Live market status">
+          <div class="africa-reference-ticker-track">
+            ${tickerItems.map((item) => `<span>${item}</span>`).join('')}
+            ${tickerItems.map((item) => `<span>${item}</span>`).join('')}
+            ${tickerItems.map((item) => `<span>${item}</span>`).join('')}
+          </div>
+        </section>
       </section>
 
-      <section class="africa-signal-row" id="markets" aria-label="Market access labels">
-        ${signals.map((signal) => `<span>${signal}</span>`).join('')}
-      </section>
-
-      <footer class="africa-footer" id="about">
-        <div>
-          <strong>africa.trades</strong>
-          <p>Informational only.</p>
-        </div>
-        <nav aria-label="Africa.Trades footer">
-          <a href="#about">About</a>
-          <a href="${contactHref}">Contact</a>
-        </nav>
-      </footer>
     </main>
   `
+}
+
+function initAfricaTradesEffects() {
+  const page = document.querySelector('.africa-page')
+
+  if (!page || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return
+  }
+
+  const tiltCards = Array.from(page.querySelectorAll('[data-tilt-card]'))
+
+  page.addEventListener('pointermove', (event) => {
+    const rect = page.getBoundingClientRect()
+    const x = ((event.clientX - rect.left) / rect.width) * 100
+    const y = ((event.clientY - rect.top) / rect.height) * 100
+    const tiltX = ((event.clientY / window.innerHeight) - 0.5) * -5
+    const tiltY = ((event.clientX / window.innerWidth) - 0.5) * 7
+
+    page.style.setProperty('--mouse-x', `${x}%`)
+    page.style.setProperty('--mouse-y', `${y}%`)
+    page.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`)
+    page.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`)
+  })
+
+  tiltCards.forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect()
+      const x = ((event.clientX - rect.left) / rect.width) * 100
+      const y = ((event.clientY - rect.top) / rect.height) * 100
+      const cardTiltX = ((event.clientY - rect.top) / rect.height - 0.5) * -4
+      const cardTiltY = ((event.clientX - rect.left) / rect.width - 0.5) * 5
+
+      card.style.setProperty('--card-x', `${x}%`)
+      card.style.setProperty('--card-y', `${y}%`)
+      card.style.setProperty('--card-tilt-x', `${cardTiltX.toFixed(2)}deg`)
+      card.style.setProperty('--card-tilt-y', `${cardTiltY.toFixed(2)}deg`)
+    })
+
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--card-tilt-x', '0deg')
+      card.style.setProperty('--card-tilt-y', '0deg')
+    })
+  })
 }
 
 let bondDeskActiveSetIndex = 0
@@ -596,4 +649,8 @@ app.innerHTML = isBondDeskHeadlinesPreview
 
 if (isBondDeskHeadlinesPreview) {
   initBondDeskHeadlineRotation()
+}
+
+if (partner?.variant === 'africa') {
+  initAfricaTradesEffects()
 }
